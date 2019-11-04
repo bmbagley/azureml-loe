@@ -14,7 +14,16 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "azureml-bmb-datafactory/raw_data/loe_raw.csv"
+					},
+					{
+						"name": "Destination",
+						"value": "azureml-bmb-datafactory/output/"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
@@ -37,7 +46,230 @@
 							"fileExtension": ".csv"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
+					"redirectIncompatibleRowSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureMlDemoInADay_link",
+							"type": "LinkedServiceReference"
+						},
+						"path": "azureml-bmb-datafactory/logs"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Client Name",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 1
+								}
+							},
+							{
+								"source": {
+									"name": "Engagement Title",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 2
+								}
+							},
+							{
+								"source": {
+									"name": "SFDC Opp #",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 3
+								}
+							},
+							{
+								"source": {
+									"name": "Platform",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 4
+								}
+							},
+							{
+								"source": {
+									"name": "Onsite Location",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 5
+								}
+							},
+							{
+								"source": {
+									"name": "Signed FA/MSA",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 6
+								}
+							},
+							{
+								"source": {
+									"name": "Existing Customer",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 7
+								}
+							},
+							{
+								"source": {
+									"name": "Products",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 8
+								}
+							},
+							{
+								"source": {
+									"name": "Cloud Ops Customer",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 9
+								}
+							},
+							{
+								"source": {
+									"name": "Cloud Platform",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 10
+								}
+							},
+							{
+								"source": {
+									"name": "Desired Start Date",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 11
+								}
+							},
+							{
+								"source": {
+									"name": "Desired End Date",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 12
+								}
+							},
+							{
+								"source": {
+									"name": "Proposal Link",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 13
+								}
+							},
+							{
+								"source": {
+									"name": "Second Doc Link",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 14
+								}
+							},
+							{
+								"source": {
+									"name": "LoE Created By",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 15
+								}
+							},
+							{
+								"source": {
+									"name": "LoE Created Date",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 16
+								}
+							},
+							{
+								"source": {
+									"name": "Pricing Basis",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 17
+								}
+							},
+							{
+								"source": {
+									"name": "Project Details",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Desired Duration",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 19
+								}
+							},
+							{
+								"source": {
+									"name": "LoE Duration Weeks",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 20
+								}
+							},
+							{
+								"source": {
+									"name": "Project Summary (Consider: Account, Background, Location, Resourcing, Key Dates etc)",
+									"type": "String"
+								},
+								"sink": {
+									"type": "String",
+									"ordinal": 21
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
