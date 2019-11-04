@@ -15,9 +15,9 @@
 				"container": "azureml-bmb-datafactory"
 			},
 			"columnDelimiter": ",",
-			"escapeChar": "\\",
+			"escapeChar": "",
 			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			"quoteChar": "\\"
 		},
 		"schema": [
 			{
