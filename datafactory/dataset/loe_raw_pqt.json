@@ -15,7 +15,7 @@
 				"folderPath": "raw_data/parquet",
 				"container": "azureml-bmb-datafactory"
 			},
-			"compressionCodec": "none"
+			"compressionCodec": "snappy"
 		},
 		"schema": [
 			{
