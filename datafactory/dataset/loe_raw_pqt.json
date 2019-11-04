@@ -1,0 +1,111 @@
+{
+	"name": "loe_raw_pqt",
+	"properties": {
+		"description": "parquet file of raw data to relieve qutoing issues in text field",
+		"linkedServiceName": {
+			"referenceName": "AzureMlDemoInADay_link",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "loe_raw.parquet",
+				"folderPath": "raw_data/parquet",
+				"container": "azureml-bmb-datafactory"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Client Name",
+				"type": "UTF8"
+			},
+			{
+				"name": "Engagement Title",
+				"type": "UTF8"
+			},
+			{
+				"name": "SFDC Opp #",
+				"type": "UTF8"
+			},
+			{
+				"name": "Platform",
+				"type": "UTF8"
+			},
+			{
+				"name": "Onsite Location",
+				"type": "UTF8"
+			},
+			{
+				"name": "Signed FA/MSA",
+				"type": "UTF8"
+			},
+			{
+				"name": "Existing Customer",
+				"type": "UTF8"
+			},
+			{
+				"name": "Products",
+				"type": "UTF8"
+			},
+			{
+				"name": "Cloud Ops Customer",
+				"type": "UTF8"
+			},
+			{
+				"name": "Cloud Platform",
+				"type": "UTF8"
+			},
+			{
+				"name": "Desired Start Date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Desired End Date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Proposal Link",
+				"type": "UTF8"
+			},
+			{
+				"name": "Second Doc Link",
+				"type": "UTF8"
+			},
+			{
+				"name": "LoE Created By",
+				"type": "UTF8"
+			},
+			{
+				"name": "LoE Created Date",
+				"type": "UTF8"
+			},
+			{
+				"name": "Pricing Basis",
+				"type": "UTF8"
+			},
+			{
+				"name": "Project Details",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Desired Duration",
+				"type": "UTF8"
+			},
+			{
+				"name": "LoE Duration Weeks",
+				"type": "UTF8"
+			},
+			{
+				"name": "Project Summary (Consider: Account, Background, Location, Resourcing, Key Dates etc)",
+				"type": "UTF8"
+			},
+			{
+				"name": "__index_level_0__",
+				"type": "INT64"
+			}
+		]
+	}
+}
