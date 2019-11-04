@@ -88,7 +88,7 @@
 			},
 			{
 				"name": "Project Details",
-				"type": "DOUBLE"
+				"type": "UTF8"
 			},
 			{
 				"name": "Desired Duration",
