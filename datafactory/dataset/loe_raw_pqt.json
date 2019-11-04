@@ -19,87 +19,87 @@
 		},
 		"schema": [
 			{
-				"name": "Client Name",
+				"name": "client_name",
 				"type": "UTF8"
 			},
 			{
-				"name": "Engagement Title",
+				"name": "engagement_title",
 				"type": "UTF8"
 			},
 			{
-				"name": "SFDC Opp #",
+				"name": "sfdc_opp_num",
 				"type": "UTF8"
 			},
 			{
-				"name": "Platform",
+				"name": "platform",
 				"type": "UTF8"
 			},
 			{
-				"name": "Onsite Location",
+				"name": "onsite_location",
 				"type": "UTF8"
 			},
 			{
-				"name": "Signed FA/MSA",
+				"name": "signed_famsa",
 				"type": "UTF8"
 			},
 			{
-				"name": "Existing Customer",
+				"name": "existing_customer",
 				"type": "UTF8"
 			},
 			{
-				"name": "Products",
+				"name": "products",
 				"type": "UTF8"
 			},
 			{
-				"name": "Cloud Ops Customer",
+				"name": "cloud_ops_customer",
 				"type": "UTF8"
 			},
 			{
-				"name": "Cloud Platform",
+				"name": "cloud_platform",
 				"type": "UTF8"
 			},
 			{
-				"name": "Desired Start Date",
+				"name": "desired_start_date",
 				"type": "UTF8"
 			},
 			{
-				"name": "Desired End Date",
+				"name": "desired_end_date",
 				"type": "UTF8"
 			},
 			{
-				"name": "Proposal Link",
+				"name": "proposal_link",
 				"type": "UTF8"
 			},
 			{
-				"name": "Second Doc Link",
+				"name": "second_doc_link",
 				"type": "UTF8"
 			},
 			{
-				"name": "LoE Created By",
+				"name": "loe_created_by",
 				"type": "UTF8"
 			},
 			{
-				"name": "LoE Created Date",
+				"name": "loe_created_date",
 				"type": "UTF8"
 			},
 			{
-				"name": "Pricing Basis",
+				"name": "pricing_basis",
 				"type": "UTF8"
 			},
 			{
-				"name": "Project Details",
+				"name": "project_details",
 				"type": "UTF8"
 			},
 			{
-				"name": "Desired Duration",
+				"name": "desired_duration",
 				"type": "UTF8"
 			},
 			{
-				"name": "LoE Duration Weeks",
+				"name": "loe_duration_weeks",
 				"type": "UTF8"
 			},
 			{
-				"name": "Project Summary (Consider: Account, Background, Location, Resourcing, Key Dates etc)",
+				"name": "project_summary_consider_account_background_location_resourcing_key_dates_etc",
 				"type": "UTF8"
 			},
 			{
