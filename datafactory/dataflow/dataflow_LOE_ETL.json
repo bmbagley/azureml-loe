@@ -16,10 +16,10 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "DerivedColumn1"
+					"name": "Select1"
 				}
 			],
-			"script": "\nparameters{\n\t as string\n}\nsource(output(\n\t\t{Client Name} as string,\n\t\t{Engagement Title} as string,\n\t\t{SFDC Opp #} as string,\n\t\tPlatform as string,\n\t\t{Onsite Location} as string,\n\t\t{Signed FA/MSA} as string,\n\t\t{Existing Customer} as string,\n\t\tProducts as string,\n\t\t{Cloud Ops Customer} as string,\n\t\t{Cloud Platform} as string,\n\t\t{Desired Start Date} as string,\n\t\t{Desired End Date} as string,\n\t\t{Proposal Link} as string,\n\t\t{Second Doc Link} as string,\n\t\t{LoE Created By} as string,\n\t\t{LoE Created Date} as string,\n\t\t{Pricing Basis} as string,\n\t\t{Project Details} as string,\n\t\t{Desired Duration} as string,\n\t\t{LoE Duration Weeks} as string,\n\t\t{Project Summary (Consider: Account, Background, Location, Resourcing, Key Dates etc)} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> loerawtransform\nloerawtransform derive({SFDC Opp #} = toInteger({SFDC Opp #}),\n\t\tPlatform = case(\n    lower(Platform) == 'aws', 'aws',\n    lower(Platform) == 'gcp', 'gcp',\n    lower(Platform) == 'azure', 'azure',\n    regexMatch(Platform, `.*(\\+).*`), 'multicloud'\n)) ~> DerivedColumn1"
+			"script": "\nparameters{\n\t as string\n}\nsource(output(\n\t\t{Client Name} as string,\n\t\t{Engagement Title} as string,\n\t\t{SFDC Opp #} as string,\n\t\tPlatform as string,\n\t\t{Onsite Location} as string,\n\t\t{Signed FA/MSA} as string,\n\t\t{Existing Customer} as string,\n\t\tProducts as string,\n\t\t{Cloud Ops Customer} as string,\n\t\t{Cloud Platform} as string,\n\t\t{Desired Start Date} as string,\n\t\t{Desired End Date} as string,\n\t\t{Proposal Link} as string,\n\t\t{Second Doc Link} as string,\n\t\t{LoE Created By} as string,\n\t\t{LoE Created Date} as string,\n\t\t{Pricing Basis} as string,\n\t\t{Project Details} as string,\n\t\t{Desired Duration} as string,\n\t\t{LoE Duration Weeks} as string,\n\t\t{Project Summary (Consider: Account, Background, Location, Resourcing, Key Dates etc)} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> loerawtransform\nloerawtransform select(mapColumn(\n\t\tclient_name = {Client Name},\n\t\tsfdc_num = {SFDC Opp #},\n\t\tplatform = Platform,\n\t\tdesired_start_date = {Desired Start Date},\n\t\tdesired_duration = {Desired Duration},\n\t\tloe_duration_weeks = {LoE Duration Weeks}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
 		}
 	}
 }
