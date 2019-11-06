@@ -1,0 +1,292 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "AzureMlDemoInADay"
+		},
+		"AzureMlDemoInADay_link_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMlDemoInADay_link'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/loe_raw_dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMlDemoInADay_link",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "loe_raw.csv",
+						"folderPath": "raw_data",
+						"container": "azureml-bmb-datafactory"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMlDemoInADay_link')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/loe_raw_pqt')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "parquet file of raw data to relieve qutoing issues in text field",
+				"linkedServiceName": {
+					"referenceName": "AzureMlDemoInADay_link",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "loe_raw.parquet",
+						"folderPath": "raw_data/parquet",
+						"container": "azureml-bmb-datafactory"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "client_name",
+						"type": "UTF8"
+					},
+					{
+						"name": "engagement_title",
+						"type": "UTF8"
+					},
+					{
+						"name": "sfdc_opp_num",
+						"type": "UTF8"
+					},
+					{
+						"name": "platform",
+						"type": "UTF8"
+					},
+					{
+						"name": "onsite_location",
+						"type": "UTF8"
+					},
+					{
+						"name": "signed_famsa",
+						"type": "UTF8"
+					},
+					{
+						"name": "existing_customer",
+						"type": "UTF8"
+					},
+					{
+						"name": "products",
+						"type": "UTF8"
+					},
+					{
+						"name": "cloud_ops_customer",
+						"type": "UTF8"
+					},
+					{
+						"name": "cloud_platform",
+						"type": "UTF8"
+					},
+					{
+						"name": "desired_start_date",
+						"type": "UTF8"
+					},
+					{
+						"name": "desired_end_date",
+						"type": "UTF8"
+					},
+					{
+						"name": "proposal_link",
+						"type": "UTF8"
+					},
+					{
+						"name": "second_doc_link",
+						"type": "UTF8"
+					},
+					{
+						"name": "loe_created_by",
+						"type": "UTF8"
+					},
+					{
+						"name": "loe_created_date",
+						"type": "UTF8"
+					},
+					{
+						"name": "pricing_basis",
+						"type": "UTF8"
+					},
+					{
+						"name": "project_details",
+						"type": "UTF8"
+					},
+					{
+						"name": "desired_duration",
+						"type": "UTF8"
+					},
+					{
+						"name": "loe_duration_weeks",
+						"type": "UTF8"
+					},
+					{
+						"name": "project_summary_consider_account_background_location_resourcing_key_dates_etc",
+						"type": "UTF8"
+					},
+					{
+						"name": "__index_level_0__",
+						"type": "INT64"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMlDemoInADay_link')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMlDemoInADay_link')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "LOE Client data",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureMlDemoInADay_link_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow_LOE_ETL')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Mapping columns with if/then logic and categorization",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "loe_raw_pqt",
+								"type": "DatasetReference"
+							},
+							"name": "loerawtransform",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "castingdtypes"
+						},
+						{
+							"name": "RMNAclient"
+						}
+					],
+					"script": "\n\nsource(output(\n\t\tclient_name as string,\n\t\tengagement_title as string,\n\t\tsfdc_opp_num as string,\n\t\tplatform as string,\n\t\tonsite_location as string,\n\t\tsigned_famsa as string,\n\t\texisting_customer as string,\n\t\tproducts as string,\n\t\tcloud_ops_customer as string,\n\t\tcloud_platform as string,\n\t\tdesired_start_date as string,\n\t\tdesired_end_date as string,\n\t\tproposal_link as string,\n\t\tsecond_doc_link as string,\n\t\tloe_created_by as string,\n\t\tloe_created_date as string,\n\t\tpricing_basis as string,\n\t\tproject_details as string,\n\t\tdesired_duration as string,\n\t\tloe_duration_weeks as string,\n\t\tproject_summary_consider_account_background_location_resourcing_key_dates_etc as string,\n\t\t{__index_level_0__} as long\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tformat: 'parquet') ~> loerawtransform\nloerawtransform select(mapColumn(\n\t\tclient_name,\n\t\tengagement_title,\n\t\tsfdc_opp_num,\n\t\tplatform,\n\t\tsigned_famsa,\n\t\texisting_customer,\n\t\tcloud_ops_customer,\n\t\tcloud_platform,\n\t\tdesired_start_date,\n\t\tdesired_end_date,\n\t\tloe_created_by,\n\t\tloe_created_date,\n\t\tpricing_basis,\n\t\tproject_details,\n\t\tdesired_duration,\n\t\tproject_summary_consider_account_background_location_resourcing_key_dates_etc\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(sfdc_opp_num = iif(sfdc_opp_num == 'NA' || sfdc_opp_num == '', 99999,\n    iif(length(sfdc_opp_num)<= 6, toInteger(sfdc_opp_num), 99999)\n),\n\t\tclient_name = iif(client_name == '<Client Name>',\n    'NA' , client_name),\n\t\tplatform = iif(regexMatch(platform, `\\++`), 'Hybrid', platform),\n\t\tsigned_famsa = toBoolean(\n    iif(lower(signed_famsa) == 'yes', 'True', 'False')\n),\n\t\texisting_customer = toBoolean(iif(lower(signed_famsa) == 'yes', 'True', 'False')),\n\t\tcloud_ops_customer = toBoolean(iif(lower(cloud_ops_customer) == 'yes', 'True', 'False')),\n\t\tdesired_start_date = iif(regexMatch(desired_start_date, `/`),\n    toDate(desired_start_date,'MM/dd/yy'), \n    toDate(desired_start_date, 'dd-MMM-yyyy')),\n\t\tdesired_end_date = iif(regexMatch(desired_end_date, `/`),\n    toDate(desired_end_date,'MM/dd/yy'), \n    toDate(desired_end_date, 'dd-MMM-yyyy')),\n\t\tloe_created_date = iif(regexMatch(loe_created_date, `/`),\n    toDate(loe_created_date,'MM/dd/yy'), \n    toDate(loe_created_date, 'dd-MMM-yyyy')),\n\t\tdesired_duration = toFloat(desired_duration)) ~> castingdtypes\ncastingdtypes filter(client_name != 'NA' ) ~> RMNAclient\nRMNAclient sink(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/loe_raw_pqt')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMlDemoInADay_link",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "output",
+						"container": "azureml-bmb-datafactory"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMlDemoInADay_link')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/transform-raw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "transform raw to usable dtypes",
+				"activities": [
+					{
+						"name": "dataflow_LOE_ETL",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow_LOE_ETL",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"loerawtransform": {},
+									"sink1": {}
+								}
+							},
+							"staging": {}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow_LOE_ETL')]"
+			]
+		}
+	]
+}
