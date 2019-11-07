@@ -1,0 +1,20 @@
+{
+	"name": "Parquet1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureMlDemoInADay_link",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "output/dataflow_out",
+				"container": "azureml-bmb-datafactory"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
