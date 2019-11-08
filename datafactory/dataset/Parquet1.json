@@ -11,6 +11,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "@pipeline.snappy.parquet",
 				"folderPath": "output/dataflow_out",
 				"container": "azureml-bmb-datafactory"
 			},
