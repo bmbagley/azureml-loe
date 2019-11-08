@@ -1,6 +1,7 @@
 {
 	"name": "Parquet1",
 	"properties": {
+		"description": "Parquet from ETL of loe's in google drive",
 		"linkedServiceName": {
 			"referenceName": "AzureMlDemoInADay_link",
 			"type": "LinkedServiceReference"
